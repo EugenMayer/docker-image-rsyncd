@@ -1,0 +1,6 @@
+version: "2"
+services:
+        rsync:
+                build:
+                        context: .
+                image: eugenmayer/rsync
