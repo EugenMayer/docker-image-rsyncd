@@ -6,13 +6,12 @@ GROUP=${GROUP:-nogroup}
 OWNERID=${OWNERID:-1000}
 GROUPID=${GROUPID:-1000}
 
+mkdir -p $VOLUME
 
 id -u $GROUP &>/dev/null || (addgroup -g $GROUPID $GROUP && echo "created group $GROUP with id $GROUPID")
 # option -N does not seem to be available,
 # option -D sets no pw for user
 id -u $OWNER &>/dev/null || (adduser  -D -G $GROUP -u $OWNERID $OWNER -h $VOLUME && echo "created user $OWNER with id $OWNERID")
-
-mkdir -p $VOLUME
 
 chown "${OWNER}:${GROUP}" "${VOLUME}"
 
