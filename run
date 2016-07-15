@@ -17,12 +17,11 @@ mkdir -p $VOLUME
 chown "${OWNER}:${GROUP}" "${VOLUME}"
 
 # updated condition if rsyncd.conf exist
-if [ -f /etc/rsyncd.conf ];
-then
-	cat <<EOF >> /etc/rsyncd.conf
+[ -f /etc/rsyncd.conf ] || cat <<EOF > /etc/rsyncd.conf
+pid file = /var/run/rsyncd.pid
 uid = ${OWNER}
 gid = ${GROUP}
-use chroot = yes
+use chroot = no
 log file = /dev/stdout
 reverse lookup = no
 [volume]
@@ -32,6 +31,5 @@ reverse lookup = no
     path = ${VOLUME}
     comment = docker volume
 EOF
-fi
 
 exec /usr/bin/rsync --no-detach --daemon --config="/etc/rsyncd.conf" "$@"
