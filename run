@@ -16,10 +16,12 @@ mkdir -p $VOLUME
 
 chown "${OWNER}:${GROUP}" "${VOLUME}"
 
+# updated condition if rsyncd.conf exist
 [ -f /etc/rsyncd.conf ] || cat <<EOF > /etc/rsyncd.conf
+pid file = /var/run/rsyncd.pid
 uid = ${OWNER}
 gid = ${GROUP}
-use chroot = yes
+use chroot = no
 log file = /dev/stdout
 reverse lookup = no
 [volume]
