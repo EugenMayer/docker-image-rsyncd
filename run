@@ -15,6 +15,13 @@ id -u $OWNER &>/dev/null || (adduser  -D -G $GROUP -u $OWNERID $OWNER -h $VOLUME
 
 chown "${OWNER}:${GROUP}" "${VOLUME}"
 
+if [ -f '/var/run/rsyncd.pid' ]; then
+  PID=`cat /var/run/rsyncd.pid`
+  echo "pidfile exsits with pid $PID, killing and removing it - restarting further on"
+  killall $PID > /dev/null 2>&1  
+  rm /var/run/rsyncd.pid
+fi
+
 # updated condition if rsyncd.conf exist
 [ -f /etc/rsyncd.conf ] || cat <<EOF > /etc/rsyncd.conf
 pid file = /var/run/rsyncd.pid
