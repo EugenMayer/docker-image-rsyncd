@@ -22,6 +22,12 @@ if [ -f '/var/run/rsyncd.pid' ]; then
   rm /var/run/rsyncd.pid
 fi
 
+# see https://wiki.alpinelinux.org/wiki/Setting_the_timezone
+if [ -n ${TZ} ] && [ -f /usr/share/zoneinfo/${TZ} ]; then
+    ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime
+    echo ${TZ} > /etc/timezone
+fi
+
 # updated condition if rsyncd.conf exist
 [ -f /etc/rsyncd.conf ] || cat <<EOF > /etc/rsyncd.conf
 pid file = /var/run/rsyncd.pid
