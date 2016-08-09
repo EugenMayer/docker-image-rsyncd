@@ -36,6 +36,7 @@ gid = ${GROUP}
 use chroot = no
 log file = /dev/stdout
 reverse lookup = no
+munge symlinks = no
 [volume]
     hosts deny = *
     hosts allow = ${ALLOW}
