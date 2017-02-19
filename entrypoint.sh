@@ -23,7 +23,7 @@ if [ "$1" == 'supervisord' ]; then
 		echo "no user has uid $OWNER_UID"
 
 		# If user doesn't exist on the system
-		usermod -u $OWNER_UID dockersync
+		useradd -u $OWNER_UID dockersync -m
 	else
 		if [ $OWNER_UID == 0 ]; then
 			# in case it is root, we need a special treatment
