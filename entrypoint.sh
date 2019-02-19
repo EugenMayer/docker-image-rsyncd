@@ -78,7 +78,7 @@ if [ "$1" == 'supervisord' ]; then
 	if [ -f '/var/run/rsyncd.pid' ]; then
 	  PID=`cat /var/run/rsyncd.pid`
 	  echo "pidfile exsits with pid $PID, killing and removing it - restarting further on"
-	  killall $PID > /dev/null 2>&1
+	  killall $PID > /dev/null 2>&1 || echo "Process was not running"
 	  rm /var/run/rsyncd.pid
 	fi
 
